@@ -8,8 +8,6 @@ param nsgName string = 'Ansible-NSG'
 
 @secure()
 param sshPublicKey string
-
-// Accept a full resource id for the user-assigned identity
 param userAssignedIdentityId string
 
 module vnetModule './vnet.bicep' = {
@@ -49,3 +47,4 @@ module vmModule './vm.bicep' = {
     networkModule
   ]
 }
+
