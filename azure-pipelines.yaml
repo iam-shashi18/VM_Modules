@@ -1,0 +1,23 @@
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+stages:
+- stage: DeployVM
+  jobs:
+  - job: DeployVMUsingBicep
+    steps:
+      - task: AzureCLI@2
+        inputs:
+          azureSubscription: 'AnsibleVM'
+          scriptType: 'bash'
+          scriptLocation: 'inlineScript'
+          inlineScript: |
+            az deployment group create \
+              --resource-group rg1 \
+              --template-file main.bicep \
+              --parameters @parameters.json
+             
+
