@@ -25,10 +25,11 @@
       "value": "Ansible-NSG"
     },
     "userAssignedIdentityId": {
-      "value": "/subscriptions/<subscription-id>/resourceGroups/<rg-name>/providers/Microsoft.ManagedIdentity/userAssignedIdentities/<identity-name>"
+      "value": ""
     },
     "sshPublicKey": {
       "value": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCfTLO2Sx6YEAFJf6gDsG/yRdsB2TFtCQTpPhAYGGhHyKnpROa6gtFAKq+BtvBKBbemiF/NHsGxULYhYgMgk0tbG4QbVg4o5CeoSmuXIzlBZsN2A6zkumOzhw8IVRnxqdxmftzNQowsEtJNX8VDt+hXInTeyM58Rp9utDXdLMSfVGt0s6uLtn/uNn5/lAQgkQXibxejsvhewg+3SkrL0y2Os8LFlzicZbkfCxUb4Rx/UW9ZWt8vP+GsDfphUbytOmy97c+AAtDTHOLDXKLOdl0YMaAlAlVSu2xOfj3ON5eiyjUr643sDfcJosricP4vfNOlReLSv8HEGlsHA0/bfO8Ts"
     }
   }
 }
+
