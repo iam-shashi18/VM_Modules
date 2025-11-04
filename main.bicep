@@ -8,7 +8,16 @@ param nsgName string = 'Ansible-NSG'
 
 @secure()
 param sshPublicKey string
-param userAssignedIdentityId string
+
+param identityName string = 'ansible-identity'  
+
+module identityModule './identity.bicep' = {
+  name: 'identityModule'
+  params: {
+    location: location
+    identityName: identityName
+  }
+}
 
 module vnetModule './vnet.bicep' = {
   name: 'vnetModule'
@@ -40,11 +49,7 @@ module vmModule './vm.bicep' = {
     Username: Username
     location: location
     nicId: networkModule.outputs.nicId
-    userAssignedIdentityId: userAssignedIdentityId
+    userAssignedIdentityId: identityModule.outputs.identityId  
     sshPublicKey: sshPublicKey
   }
-  dependsOn: [
-    networkModule
-  ]
 }
-
