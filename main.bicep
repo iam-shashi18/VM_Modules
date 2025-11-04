@@ -1,15 +1,18 @@
-param vmName string = 'Ansible-server'
-param Username string = 'Ansibleuser'
-param location string = 'Central India'
-param vnetName string = 'Ansible-Vnet'
-param subnetName string = 'Ansible-Subnet'
-param nicName string = 'Ansible-NIC'
-param nsgName string = 'Ansible-NSG'
-
+param vmName string 
+param Username string 
+param location string 
+param vnetName string 
+param subnetName string 
+param nicName string 
+param nsgName string 
+param privateEndpointName string 
+param tenantId string 
+param keyVaultName string
 @secure()
 param sshPublicKey string
 
-param identityName string = 'ansible-identity'  
+param identityName string 
+
 
 module identityModule './identity.bicep' = {
   name: 'identityModule'
@@ -18,6 +21,7 @@ module identityModule './identity.bicep' = {
     identityName: identityName
   }
 }
+
 
 module vnetModule './vnet.bicep' = {
   name: 'vnetModule'
@@ -28,6 +32,22 @@ module vnetModule './vnet.bicep' = {
     nsgName: nsgName
   }
 }
+
+
+module keyVaultModule './keyvault.bicep' = {
+  name: 'keyVaultPrivateModule'
+  params: {
+    location: location
+    keyVaultName: keyVaultName
+    pleSubnetId: vnetModule.outputs.pleSubnetId
+    tenantId: tenantId
+    privateEndpointName: privateEndpointName
+  }
+  dependsOn: [
+    vnetModule
+  ]
+}
+
 
 module networkModule './network.bicep' = {
   name: 'networkModule'
@@ -49,7 +69,11 @@ module vmModule './vm.bicep' = {
     Username: Username
     location: location
     nicId: networkModule.outputs.nicId
-    userAssignedIdentityId: identityModule.outputs.identityId  
+    userAssignedIdentityId: identityModule.outputs.identityId
     sshPublicKey: sshPublicKey
   }
+  dependsOn: [
+    networkModule
+    identityModule
+  ]
 }
