@@ -2,7 +2,7 @@ param vmName string
 param Username string
 param location string
 param nicId string
-param userAssignedIdentityId string
+param userAssignedIdentityId string  
 @secure()
 param sshPublicKey string
 
@@ -12,7 +12,7 @@ resource vm 'Microsoft.Compute/virtualMachines@2023-09-01' = {
   identity: {
     type: 'UserAssigned'
     userAssignedIdentities: {
-      [userAssignedIdentityId]: {}
+      '${userAssignedIdentityId}': {}  
     }
   }
   properties: {
@@ -38,7 +38,7 @@ resource vm 'Microsoft.Compute/virtualMachines@2023-09-01' = {
       imageReference: {
         publisher: 'Canonical'
         offer: 'UbuntuServer'
-        sku: '22_04-lts'
+        sku: '20_04-lts'
         version: 'latest'
       }
       osDisk: {
