@@ -17,6 +17,14 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2023-05-01' = {
           addressPrefix: '10.0.0.0/24'
         }
       }
+      //added ple subnet here
+      {
+        name: 'ple-subnet'
+        properties: {
+          addressPrefix: '10.0.2.0/24'
+          privateEndpointNetworkPolicies: 'Disabled'
+        }
+      }
     ]
   }
 }
@@ -47,7 +55,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-05-01' = {
           access: 'Allow'
           protocol: '*'
           sourcePortRange: '*'
-          destinationPortRange: '*'
+          destinationPortRange: '22'
           sourceAddressPrefix: '10.0.0.0/16'
           destinationAddressPrefix: '*'
         }
@@ -57,4 +65,5 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-05-01' = {
 }
 
 output subnetId string = virtualNetwork.properties.subnets[0].id
+output pleSubnetId string = virtualNetwork.properties.subnets[1].id
 output nsgId string = nsg.id
